@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GymFuel - Diet Plans & Fitness Guide</title>
+
+<!-- Bootstrap & External Libraries -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Bebas+Neue&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+
+<style>
+body {
+    font-family: 'Poppins', sans-serif;
+    transition: background-color 0.5s, color 0.5s;
+    overflow-x: hidden;
+}
+h1, h2, h4, h5 {
+    font-family: 'Bebas Neue', sans-serif;
+    letter-spacing: 1px;
+}
+html {
+    scroll-behavior: smooth;
+}
+.navbar {
+    background-color: white !important;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Optional slight shadow for separation */
+}
+
+.dark-mode {
+    background-color: #121212 !important;
+    color: #e0e0e0 !important;
+}
+.dark-mode .navbar, .dark-mode footer {
+    background-color: #020202 !important;
+}
+.dark-mode,
+.dark-mode p,
+.dark-mode h1,
+.dark-mode h2,
+.dark-mode h3,
+.dark-mode h4,
+.dark-mode h5,
+.dark-mode h6,
+.dark-mode li,
+.dark-mode a,
+.dark-mode span,
+.dark-mode .btn,
+.dark-mode .footer-text,
+.dark-mode .footer-links a,
+.dark-mode .footer-heading,
+.dark-mode .nav-link {
+    color: #e0e0e0 !important;
+}
+
+.dark-mode .btn {
+    background-color: #28a745;
+    color: #ffffff !important;
+}
+
+.dark-mode .btn:hover {
+    background-color: #ffc107;
+    color: black !important;
+}
+
+.dark-mode .footer-links a:hover {
+    color: #7ED957 !important;
+}
+
+.dark-mode .icon-wrapper i {
+    color: #ffffff !important;
+}
+
+.dark-mode .social-icons a {
+    background: #4CAF50;
+    color: white !important;
+}
+
+.section-title {
+    text-align: center;
+    margin: 50px 0 20px;
+    font-size: 2rem;
+    font-weight: bold;
+}
+#toggleSymbol {
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+.btn-animated {
+    transition: transform 0.3s, background-color 0.3s;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 600;
+}
+.btn-animated:hover {
+    transform: scale(1.1);
+    background-color: #ffc107;
+    color: black;
+}
+.card {
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+}
+.navbar, footer {
+    background-color: white !important;
+}
+.navbar .nav-link, .navbar-brand span {
+    color: black !important;
+    transition: color 0.3s;
+}
+.dark-mode .navbar .nav-link, .dark-mode .navbar-brand span {
+    color: white !important;
+}
+footer {
+    color: black !important;
+}
+.dark-mode footer {
+    color: white !important;
+}
+.navbar-brand span {
+    font-size: 1.8rem;
+    font-family: 'Impact', 'Arial Black', sans-serif;
+}
+.carousel-caption {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    bottom: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 100%;
+    padding: 0 15px;
+}
+.carousel-caption h1 {
+    font-size: 3.5rem;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+    margin-bottom: 1rem;
+}
+.carousel-caption p {
+    font-size: 1.3rem;
+    text-shadow: 1px 1px 6px rgba(0, 0, 0, 0.7);
+    margin-bottom: 1.5rem;
+}
+.carousel-caption .btn {
+    padding: 0.7rem 2rem;
+    border-radius: 25px;
+    font-size: 1.1rem;
+}
+.carousel-image-wrapper {
+    height: 1000px;
+    overflow: hidden;
+}
+.carousel-image-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.zoom-img {
+    transition: transform 8s ease;
+}
+.carousel-item.active .zoom-img {
+    transform: scale(1.1);
+}
+.gym-footer {
+    background-color: #1d1f23;
+    color: #0e0e0e;
+    position: relative;
+    overflow: hidden;
+    font-family: 'Poppins', sans-serif;
+}
+.footer-brand {
+    color: #000 !important;
+    transition: color 0.3s ease;
+}
+
+.dark-mode .footer-brand {
+    color: #fff !important;
+}
+
+.footer-wave {
+    background: linear-gradient(135deg, #7ED957 0%, #4CAF50 100%);
+    height: 100px;
+    border-bottom-left-radius: 50% 20%;
+    border-bottom-right-radius: 50% 20%;
+}
+
+.footer-heading {
+    color: #7ED957;
+    margin-bottom: 1rem;
+    font-weight: 600;
+}
+
+.footer-text {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.6rem;
+}
+
+.footer-links a {
+    color: #0e0d0d;
+    text-decoration: none;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.footer-links a:hover {
+    color: #7ED957;
+    transform: translateX(5px);
+}
+
+.social-icons a {
+    display: inline-block;
+    background: #7ED957;
+    color: #1d1f23;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 50%;
+    margin-right: 10px;
+    transition: transform 0.3s, background-color 0.3s;
+    font-size: 18px;
+}
+
+.social-icons a:hover {
+    transform: scale(1.15);
+    background: #4CAF50;
+    color: #fff;
+}
+
+.gym-promise-section {
+    background-color: #F7FFF2;
+    transition: background-color 0.4s ease;
+}
+
+.dark-mode .gym-promise-section {
+    background-color: #1a1a1a; /* or #2a2a2a for a slightly lighter dark */
+}
+
+.dark-mode .gym-promise-section h2,
+.dark-mode .gym-promise-section p,
+.dark-mode .gym-promise-section h5 {
+    color: #e0e0e0 !important;
+}
+
+.gym-footer i {
+    color: inherit;
+    margin: 0;
+}
+img {
+    background: transparent !important;
+}
+.icon-wrapper {
+    background: #7ED957;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    transition: transform 0.5s ease;
+}
+.icon-wrapper:hover {
+    transform: scale(1.15) rotate(10deg);
+}
+.share-icon {
+  font-size: 1.3rem;
+  cursor: pointer;
+  color: #28a745;
+}
+.share-icon:hover {
+  color: #1e7e34;
+}
+
+</style>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+<div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="index.html">
+        <img src="images/logo2.jpg" alt="GymFuel Logo" width="40" height="40" class="me-2 rounded-circle border">
+        <span>GymFuel</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link active" href="index.html">Home</a></li>
+            <li class="nav-item"><a class="nav-link" href="foods.html">Foods</a></li>
+            <li class="nav-item"><a class="nav-link" href="dietplan.html">Diet Plans</a></li>
+            <li class="nav-item"><a class="nav-link" href="mealbuilder.html">Meal Builder</a></li>
+            <li class="nav-item"><a class="nav-link" href="#footer">About</a></li>
+        </ul>
+        <span id="toggleSymbol" class="ms-3" title="Toggle Night/Day Mode">🌙</span>
+        <span class="ms-3 share-icon" title="Scan QR Code" data-bs-toggle="modal" data-bs-target="#shareModal">
+  <i class="fas fa-qrcode"></i>
+</span>
+
+
+    </div>
+</div>
+</nav>
+
+<!-- Carousel -->
+<div id="gymCarousel" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <div class="carousel-image-wrapper">
+        <img src="images/c1.jpg" class="d-block w-100 zoom-img" alt="Diet Plans">
+      </div>
+      <div class="carousel-caption">
+        <h1 class="fw-bold display-3">Fuel Your Fitness, The Smart Way</h1>
+        <p class="lead mb-4">Personalized Diet Food Recommendations & Expert Workout Plans</p>
+        <a href="dietplan.html" class="btn btn-success btn-lg fw-bold">Explore Plans</a>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <div class="carousel-image-wrapper">
+        <img src="images/c2.jpg" class="d-block w-100 zoom-img" alt="Recipes">
+      </div>
+      <div class="carousel-caption">
+        <h1 class="fw-bold display-3">Discover Healthy Recipes</h1>
+        <p class="lead mb-4">Delicious, nutritious meals designed for your fitness goals</p>
+        <a href="recipie.html" class="btn btn-success btn-lg fw-bold">View Recipes</a>
+      </div>
+    </div>
+    <div class="carousel-item">
+      <div class="carousel-image-wrapper">
+        <img src="images/coursel3.jpg" class="d-block w-100 zoom-img" alt="Meal Builder">
+      </div>
+      <div class="carousel-caption">
+        <h1 class="fw-bold display-3">Interactive Meal Builder Tool</h1>
+        <p class="lead mb-4">Design balanced meals & track macros with ease</p>
+        <a href="mealbuilder.html" class="btn btn-success btn-lg fw-bold">Build Your Meal</a>
+      </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#gymCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#gymCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+
+<!-- Why GymFuel Section Modified and Enhanced -->
+<section class="container my-5">
+  <div class="row align-items-center">
+  
+    <!-- Text Content Left Side -->
+    <div class="col-md-6">
+      <h2 class="fw-bold mb-4" style="font-family: 'Poppins', sans-serif; font-size: 2.7rem;">
+        It's not just <span style="color:#7ED957">food</span>, <br>It's your <span style="color:#7ED957">fitness fuel!</span>
+      </h2>
+      <p style="font-size: 1.15rem; line-height: 1.9; color: #444;">
+        Say goodbye to boring diets! GymFuel makes healthy eating effortless, fun, and seriously delicious.
+        Whether your goal is building lean muscle, shedding weight, or staying energized — we’ve got your plate covered.  
+      </p>
+      <a href="dietplan.html" class="btn btn-dark btn-animated mt-4 px-4 py-2" style="font-size: 1rem;">
+        Explore Plans
+      </a>
+    </div>
+    
+    <!-- Image + Key Points Right Side -->
+    <div class="col-md-6 text-center mt-4 mt-md-0">
+      <img src="images/bowl.png" class="img-fluid mb-4" style="max-height: 240px;" alt="Healthy Food Bowl">
+    <ul class="list-unstyled mt-3 text-start d-inline-block" style="font-size: 1.1rem; line-height: 2; color: #333;">
+    <li><i class="fas fa-check-circle text-success me-2"></i> Tailored diet plans for every fitness goal</li>
+    <li><i class="fas fa-check-circle text-success me-2"></i> Handpicked nutritious foods from trusted sources</li>
+    <li><i class="fas fa-check-circle text-success me-2"></i> New recipes and healthy meal options weekly</li>
+    <li><i class="fas fa-check-circle text-success me-2"></i> Build your own meals with our easy Meal Builder tool</li>
+    <li><i class="fas fa-check-circle text-success me-2"></i> Professional guidance to maximize results</li>
+</ul>
+
+    </div>
+
+  </div>
+</section>
+
+
+<section class="py-5 gym-promise-section">
+
+  <div class="container text-center">
+    
+    <p style="color:#7ED957; font-family: 'Poppins', sans-serif; font-size: 1.2rem; font-weight: 500;">
+      Our Promise
+    </p>
+    
+    <h2 style="font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; font-weight: bold; color: #1d1f23;">
+      Why Choose <span style="color:#7ED957">GymFuel?</span>
+    </h2>
+    
+    <p class="mt-3 mb-5" style="max-width: 700px; margin: 0 auto; font-size: 1.05rem; color:#444;">
+      GymFuel is your go-to for smart diet solutions. We bring personalized food plans, advanced meal tools, and clean eating — designed to fuel your health and fitness journey.
+    </p>
+
+    <div class="row justify-content-center align-items-start">
+      
+      <div class="col-6 col-md-3 mb-4">
+        <div class="icon-wrapper">
+          <i class="fas fa-utensils fa-2x text-white"></i>
+        </div>
+        <h5 class="mt-3 fw-bold">Tailored Meals</h5>
+        <p style="font-size: 0.95rem; color:#333;">
+          Nutrition plans built just for your fitness, weight, or wellness goals.
+        </p>
+      </div>
+
+      <div class="col-6 col-md-3 mb-4">
+        <div class="icon-wrapper">
+          <i class="fas fa-tools fa-2x text-white"></i>
+        </div>
+        <h5 class="mt-3 fw-bold">Smart Tools</h5>
+        <p style="font-size: 0.95rem; color:#333;">
+          Build meals, track macros, and take control of your nutrition with ease.
+        </p>
+      </div>
+
+      <div class="col-6 col-md-3 mb-4">
+        <div class="icon-wrapper">
+          <i class="fas fa-leaf fa-2x text-white"></i>
+        </div>
+        <h5 class="mt-3 fw-bold">Clean Ingredients</h5>
+        <p style="font-size: 0.95rem; color:#333;">
+          Only real, wholesome ingredients — no artificial junk or hidden preservatives.
+        </p>
+      </div>
+
+      <div class="col-6 col-md-3 mb-4">
+        <div class="icon-wrapper">
+          <i class="fas fa-user-shield fa-2x text-white"></i>
+        </div>
+        <h5 class="mt-3 fw-bold">Expert Guidance</h5>
+        <p style="font-size: 0.95rem; color:#333;">
+          Backed by certified nutritionists for real, lasting results — not fads.
+        </p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<div class="modal fade" id="shareModal" tabindex="-1" aria-labelledby="shareModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center">
+      <div class="modal-header">
+        <h5 class="modal-title" id="shareModalLabel">Share This Page</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+  <div class="modal-body">
+  <p class="fw-semibold">Scan this QR code or share with friends to explore our website:</p>
+  
+  <div class="d-flex justify-content-center mb-3">
+    <img src="images/scan.jpg" alt="QR Code" class="img-fluid rounded shadow" style="max-width: 250px;">
+  </div>
+
+  <p class="mb-2">Share this with your fitness friends:</p>
+  <div class="d-flex justify-content-center gap-3">
+    <a href="https://api.whatsapp.com/send?text=Check%20out%20GymFuel!%20https://aditya-prabhu26.github.io/gymfuel/" target="_blank" class="btn btn-success btn-sm">
+      <i class="fab fa-whatsapp"></i> WhatsApp
+    </a>
+    <a href="https://www.facebook.com/sharer/sharer.php?u=https://aditya-prabhu26.github.io/gymfuel/" target="_blank" class="btn btn-primary btn-sm">
+      <i class="fab fa-facebook-f"></i> Facebook
+    </a>
+    <a href="https://twitter.com/intent/tweet?url=https://aditya-prabhu26.github.io/gymfuel/&text=Check%20out%20GymFuel!" target="_blank" class="btn btn-info btn-sm text-white">
+      <i class="fab fa-twitter"></i> Twitter
+    </a>
+    <a href="https://www.linkedin.com/sharing/share-offsite/?url=https://aditya-prabhu26.github.io/gymfuel/" target="_blank" class="btn btn-secondary btn-sm">
+      <i class="fab fa-linkedin-in"></i> LinkedIn
+    </a>
+  </div>
+</div>
+
+      
+    </div>
+  </div>
+</div>
+
+
+<!-- Footer Section -->
+<footer class="gym-footer" id="footer">
+  <div class="footer-wave"></div>
+  <div class="container py-5">
+    <div class="row text-center text-md-start">
+
+      <!-- About Section -->
+      <div class="col-md-4 mb-4">
+        <div class="d-flex align-items-center mb-3">
+          <img src="images/logo2.jpg" alt="GymFuel Logo" class="rounded-circle me-2" width="50" height="50">
+          <h4 class="text-white mb-0">GymFuel</h4>
+        </div>
+        <p class="footer-text">
+          The GymFuel team is passionate about delivering expert diet plans, nutritious meals, and fitness guidance designed by qualified professionals.
+        </p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+
+      <!-- Explore Links -->
+      <div class="col-md-4 mb-4">
+        <h5 class="footer-heading">Explore</h5>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="foods.html">Foods</a></li>
+          <li><a href="dietplan.html">Diet Plans</a></li>
+          <li><a href="mealbuilder.html">Meal Builder</a></li>
+          <li><a href="#footer">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Info -->
+      <div class="col-md-4 mb-4">
+        <h5 class="footer-heading">Contact</h5>
+        <p><i class="fas fa-phone-alt me-2"></i> +91 90196 00953</p>
+        <p><i class="fas fa-envelope me-2"></i> adityauprabhu@gmail.com</p>
+        <p><i class="fas fa-map-marker-alt me-2"></i> udupi, India</p>
+      </div>
+
+    </div>
+  </div>
+</footer>
+
+
+
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+AOS.init();
+const toggleSymbol = document.getElementById('toggleSymbol');
+toggleSymbol.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    toggleSymbol.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+});
+</script>
+
+</body>
+</html>

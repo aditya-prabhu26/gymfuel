@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GymFuel Food Catalog</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        body {
+            transition: background-color 0.5s, color 0.5s;
+        }
+        .dark-mode {
+            background-color: #121212 !important;
+            color: #e0e0e0 !important;
+        }
+        .dark-mode .navbar, .dark-mode footer {
+            background-color: #1f1f1f !important;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand d-flex align-items-center" href="index.html">
+            <img src="images/logo2.jpg" alt="Logo" width="40" height="40" class="me-2 rounded-circle border border-light">
+            <span style="font-family: 'Poppins', sans-serif; font-size: 1.8rem; font-weight: 700; color: #00ffcc;">
+                GymFuel
+            </span>
+        </a>
+        
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+                <li class="nav-item"><a class="nav-link active" href="foods.html">Foods</a></li>
+                <li class="nav-item"><a class="nav-link" href="dietplan.html">Diet Plans</a></li>
+                <li class="nav-item"><a class="nav-link" href="mealbuilder.html">Meal Builder</a></li>
+                <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+            </ul>
+            <span id="toggleSymbol" class="ms-3 text-white" style="cursor: pointer; font-size: 1.5rem;" title="Toggle Night/Day Mode">🌙</span>
+        </div>
+    </div>
+</nav>
+
+<div class="container my-5">
+    <h2 id="veg" class="text-center mb-4">Veg Items</h2>
+    <div class="row">
+        <div class="col-md-3 mb-4" data-aos="fade-up"><div class="card h-100"><img src="images/foods/green_salad.jpg" class="card-img-top" alt="Green Salad"><div class="card-body"><h5 class="card-title">Green Salad</h5><p class="card-text">Calories: 120 | Protein: 5g | Carbs: 15g | Fat: 4g</p></div></div></div>
+        <div class="col-md-3 mb-4" data-aos="zoom-in"><div class="card h-100"><img src="images/foods/fruit_bowl.jpg" class="card-img-top" alt="Fruit Bowl"><div class="card-body"><h5 class="card-title">Fruit Bowl</h5><p class="card-text">Calories: 180 | Protein: 3g | Carbs: 35g | Fat: 2g</p></div></div></div>
+        <div class="col-md-3 mb-4" data-aos="flip-left"><div class="card h-100"><img src="images/foods/stir_fry.jpg" class="card-img-top" alt="Veg Stir Fry"><div class="card-body"><h5 class="card-title">Veg Stir Fry</h5><p class="card-text">Calories: 250 | Protein: 7g | Carbs: 20g | Fat: 12g</p></div></div></div>
+        <div class="col-md-3 mb-4" data-aos="fade-right"><div class="card h-100"><img src="images/foods/paneer_tikka.jpg" class="card-img-top" alt="Paneer Tikka"><div class="card-body"><h5 class="card-title">Paneer Tikka</h5><p class="card-text">Calories: 300 | Protein: 18g | Carbs: 10g | Fat: 20g</p></div></div></div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <h2 id="nonveg" class="text-center mb-4">Non-Veg Items</h2>
+    <div class="row">
+        <div class="col-md-3 mb-4" data-aos="fade-up"><div class="card h-100"><img src="images/chicken_breast.jpg" class="card-img-top" alt="Grilled Chicken Breast"><div class="card-body"><h5 class="card-title">Grilled Chicken Breast</h5><p class="card-text">Calories: 150 | Protein: 30g | Carbs: 0g | Fat: 3g</p></div></div></div>
+        <div class="col-md-3 mb-4" data-aos="zoom-in"><div class="card h-100"><img src="images/salmon.jpg" class="card-img-top" alt="Grilled Salmon"><div class="card-body"><h5 class="card-title">Grilled Salmon</h5><p class="card-text">Calories: 250 | Protein: 22g | Carbs: 0g | Fat: 15g</p></div></div></div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <h2 id="mixed" class="text-center mb-4">Mixed Items</h2>
+    <div class="row">
+        <div class="col-md-3 mb-4" data-aos="fade-up"><div class="card h-100"><img src="images/mixed_bowl.jpg" class="card-img-top" alt="Mixed Protein Bowl"><div class="card-body"><h5 class="card-title">Mixed Protein Bowl</h5><p class="card-text">Calories: 450 | Protein: 30g | Carbs: 35g | Fat: 18g</p></div></div></div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <h2 id="drinks" class="text-center mb-4">Drinks</h2>
+    <div class="row">
+        <div class="col-md-3 mb-4" data-aos="fade-up"><div class="card h-100"><img src="images/protein_shake.jpg" class="card-img-top" alt="Protein Shake"><div class="card-body"><h5 class="card-title">Protein Shake</h5><p class="card-text">Calories: 200 | Protein: 25g | Carbs: 10g | Fat: 5g</p></div></div></div>
+    </div>
+</div>
+
+<footer class="bg-dark text-center text-white py-3">
+    &copy; 2025 GymFuel. All rights reserved.
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+AOS.init();
+const toggleSymbol = document.getElementById('toggleSymbol');
+toggleSymbol.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    toggleSymbol.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+});
+</script>
+
+</body>
+</html>

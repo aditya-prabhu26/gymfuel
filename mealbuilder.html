@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>GymFuel Meal Builder</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+
+<style>
+    body { font-family: 'Poppins', sans-serif; background: #f0f4f8; color: #333;  }
+   .navbar {
+    background-color: white !important;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .nav-link, .navbar-brand span {
+    color: black !important;
+    transition: color 0.3s;
+}
+
+.navbar-brand span {
+    font-size: 1.8rem;
+    font-family: 'Impact', 'Arial Black', sans-serif;
+}
+
+.dark-mode .navbar {
+    background-color: #020202 !important;
+}
+
+.dark-mode .navbar .nav-link,
+.dark-mode .navbar-brand span {
+    color: white !important;
+}
+
+#toggleSymbol {
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+    .meal-card { transition: transform 0.3s, box-shadow 0.3s; cursor: pointer; }
+    .meal-card:hover { transform: translateY(-8px); box-shadow: 0 8px 18px rgba(0,0,0,0.2); }
+    .meal-card h5 { color: #7ED957; }
+    .btn-animated { transition: transform 0.3s, background-color 0.3s; }
+    .btn-animated:hover { transform: scale(1.1); background-color: #ffc107; color: black; }
+    footer { background: #1d1f23; color: #d0d0d0; text-align: center; padding: 30px 0; }
+    .footer-wave { background: linear-gradient(135deg, #7ED957, #4CAF50); height: 100px; border-bottom-left-radius: 50% 20%; border-bottom-right-radius: 50% 20%; }
+    .gym-footer {
+    background-color: #ffffff;
+    color: #000000;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    overflow: hidden;
+}
+.footer-brand {
+    color: #000 !important;
+    transition: color 0.3s ease;
+}
+
+.dark-mode .footer-brand {
+    color: #fff !important;
+}
+
+.footer-wave {
+    background: linear-gradient(135deg, #7ED957 0%, #4CAF50 100%);
+    height: 100px;
+    border-bottom-left-radius: 50% 20%;
+    border-bottom-right-radius: 50% 20%;
+}
+
+.footer-brand {
+    color: #000 !important;
+    transition: color 0.3s ease;
+}
+
+.footer-heading {
+    color: #7ED957;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.footer-text {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.6rem;
+}
+
+.footer-links a {
+    color: #0e0d0d;
+    text-decoration: none;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.footer-links a:hover {
+    color: #7ED957;
+    transform: translateX(5px);
+}
+
+.social-icons a {
+    display: inline-block;
+    background: #7ED957;
+    color: #1d1f23;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 50%;
+    margin-right: 10px;
+    transition: transform 0.3s, background-color 0.3s;
+    font-size: 18px;
+}
+
+.social-icons a:hover {
+    transform: scale(1.15);
+    background: #4CAF50;
+    color: #fff;
+}
+
+.dark-mode footer,
+.dark-mode .gym-footer {
+    color: white !important;
+    background-color: #121212;
+}
+
+.dark-mode .footer-brand {
+    color: #fff !important;
+}
+
+.dark-mode .footer-links a {
+    color: #cccccc;
+}
+
+.dark-mode .footer-links a:hover {
+    color: #7ED957;
+}
+
+.dark-mode .footer-text,
+.dark-mode .footer-heading {
+    color: #e0e0e0 !important;
+}
+
+.meal-section {
+  background-color: #f4fdf4; /* Soft greenish background */
+  border-radius: 16px;
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.05);
+}
+
+.ai-meal-wrapper {
+  background-color: #f0fff4;
+  width: 100%;
+  border-top: none;
+  border-bottom: none;
+}
+
+
+.btn-meal {
+  background-color: #198754;
+  color: white;
+  padding: 10px 20px;
+  margin: 8px;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+}
+.btn-meal:hover {
+  transform: scale(1.1);
+  background-color: #28a745;
+  box-shadow: 0 0 12px #7ED957, 0 0 20px #7ED95788;
+}
+
+#meal-list button {
+    font-size: 0.8rem;
+    padding: 2px 6px;
+}
+.meal-table-container {
+    margin-top: 40px;
+    margin-bottom: 60px;
+    background: #fff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.meal-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.meal-table th, .meal-table td {
+    padding: 12px 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.meal-table th {
+    background-color: #7ED957;
+    color: #fff;
+    font-weight: 600;
+}
+
+.meal-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.meal-table tr:hover {
+    background-color: #f1f1f1;
+}
+
+.delete-btn {
+    background: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.delete-btn:hover {
+    background: #a71d2a;
+}
+
+.total-row {
+    background: #e9ffe9;
+    font-weight: bold;
+}
+
+.space-before-footer {
+    height: 80px;
+}
+
+.toast-message {
+  position: fixed;
+  top: 80px; /* Below navbar */
+  right: 20px;
+  min-width: 250px;
+  max-width: 300px;
+  background: #198754;
+  color: #fff;
+  padding: 14px 20px;
+  border-radius: 12px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+  font-weight: 600;
+  font-size: 1rem;
+  opacity: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transform: translateY(-20px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.toast-message.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+
+</style>
+</head>
+
+<body>
+
+
+
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="index.html">
+      <img src="images/logo2.jpg" alt="GymFuel Logo" width="40" height="40" class="me-2 rounded-circle border">
+      <span>GymFuel</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="foods.html">Foods</a></li>
+        <li class="nav-item"><a class="nav-link" href="dietplan.html">Diet Plans</a></li>
+        <li class="nav-item"><a class="nav-link" href="mealbuilder.html">Meal Builder</a></li>
+        <li class="nav-item"><a class="nav-link" href="#footer">Contact</a></li>
+      </ul>
+      <span id="toggleSymbol" class="ms-3" title="Toggle Night/Day Mode">🌙</span>
+    </div>
+  </div>
+</nav>
+
+
+
+<!-- Main Section -->
+<!-- FULL WIDTH AI MEAL SECTION -->
+<section class="ai-meal-wrapper py-5">
+  <div class="container">
+    <h2 class="text-center mb-4">Customize Your <span style="color: #7ED957;">Meal Plan</span></h2>
+
+    <!-- Buttons -->
+<div class="d-flex justify-content-center mb-4 flex-wrap">
+  <button class="btn btn-meal" onclick="showMeals('veg')">🥗 Veg</button>
+  <button class="btn btn-meal" onclick="showMeals('nonveg')">🍗 Non-Veg</button>
+  <button class="btn btn-meal" onclick="showMeals('mixed')">🍛 Mixed</button>
+  <button class="btn btn-meal" onclick="showMeals('drinks')">🥤 Drinks</button>
+</div>
+<!-- Meals Display Area -->
+<div class="row" id="meal-container"></div>
+
+
+    <!-- Summary Table -->
+    
+<!-- User Selected Meals Table (Missing Before) -->
+<div class="meal-table-container">
+  <h4 class="text-center mb-3">🧾 Your Selected Meals</h4>
+  <div class="table-responsive">
+    <table id="meal-table" class="meal-table">
+      <thead>
+        <tr>
+          <th>Meal</th>
+          <th>Calories</th>
+          <th>Protein (g)</th>
+          <th>Carbs (g)</th>
+          <th>Fat (g)</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- Dynamically added rows go here -->
+      </tbody>
+      <tfoot>
+        <tr class="total-row">
+          <td><strong>Total</strong></td>
+          <td id="totalCalories">0</td>
+          <td id="totalProtein"><strong>0g</strong></td>
+          <td id="totalCarbs"><strong>0g</strong></td>
+          <td id="totalFat"><strong>0g</strong></td>
+          <td></td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</div>
+
+    <!-- Generate Button -->
+    <div class="text-center mt-4">
+      <button class="btn btn-success btn-lg" onclick="generatePlan()">Generate Meal Plan</button>
+
+    </div>
+  </div>
+</section>
+
+
+<div class="space-before-footer"></div>
+<!-- Meal Plan Modal -->
+<div class="modal fade" id="planModal" tabindex="-1" aria-labelledby="planModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content animate__animated animate__zoomIn">
+      <div class="modal-header bg-success text-white">
+        <h5 class="modal-title" id="planModalLabel">🎉 Your Meal Plan is Ready!</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <p class="lead text-center">Here is your custom GymFuel meal plan:</p>
+        <div id="generatedPlan" class="table-responsive"></div>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- AI Meal Plan Section (Stylish Silver Theme) -->
+<section class="container py-5 mt-5 mb-5 rounded shadow" style="background: linear-gradient(135deg, #f8f9fa, #dee2e6); border: 1px solid #ccc;">
+  <div class="text-center">
+    <h4 class="mb-4 fw-bold text-dark animate__animated animate__fadeInDown">✨ Smart Meal Plan Generator (AI Based)</h4>
+    
+    <h5 class="mb-3">🤖 Want AI to create your meal plan?</h5>
+    
+   <select id="goalSelect" class="form-select w-50 mx-auto mb-3">
+  <option disabled selected>Select Your Gym Goal</option>
+  <option value="muscle">💪 Muscle Gain</option>
+  <option value="fatloss">🔥 Fat Loss</option>
+  <option value="balanced">🍽️ Balanced Nutrition</option>
+  <option value="highprotein">🥚 High Protein Plan</option>
+  <option value="lowcarb">🥦 Low Carb Plan</option>
+  <option value="highcarb">🍞 High Carb Plan</option>
+  <option value="keto">🥓 Keto Diet</option>
+  <option value="vegetarian">🌱 Vegetarian Plan</option>
+  <option value="nonvegetarian">🍗 Non-Veg Power Pack</option>
+  <option value="quick">⚡ Quick Energy Boost</option>
+</select>
+
+
+    <div class="mt-4">
+      <label for="mealCount" class="form-label fw-bold">Select number of meals for AI plan:</label>
+     <select id="mealCount" class="form-select w-auto d-inline-block">
+  <option disabled selected>Select No. of Food Items</option>
+  <option value="1">1 Item</option>
+  <option value="2">2 Items</option>
+  <option value="3">3 Items</option>
+  <option value="4">4 Items</option>
+  <option value="5">5 Items</option>
+  <option value="6">6 Items</option>
+  <option value="7">7 Items</option>
+  <option value="8">8 Items</option>
+  <option value="9">9 Items</option>
+  <option value="10">10 Items</option>
+</select>
+
+
+      <button class="btn btn-warning btn-lg ms-2 animate__animated animate__fadeInUp" onclick="generateAIPlan()">
+        🤖 AI Generate Meal Plan
+      </button>
+    </div>
+
+    <p class="mt-3 text-muted small">AI selects meals from all categories based on your fitness goal 🧠💪</p>
+  </div>
+</section>
+
+<div id="toast" class="toast-message"></div>
+
+<!-- Footer -->
+<footer class="gym-footer" id="footer">
+  <div class="footer-wave"></div>
+  <div class="container py-5">
+    <div class="row text-center text-md-start">
+      <!-- About -->
+      <div class="col-md-4 mb-4">
+        <div class="d-flex align-items-center mb-3">
+          <img src="images/logo2.jpg" alt="GymFuel Logo" class="rounded-circle me-2" width="50" height="50">
+          <h4 class="footer-brand mb-0">GymFuel</h4>
+        </div>
+        <p class="footer-text">
+          The GymFuel team is passionate about delivering expert diet plans, nutritious meals, and fitness guidance.
+        </p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+
+      <!-- Links -->
+      <div class="col-md-4 mb-4">
+        <h5 class="footer-heading">Explore</h5>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="foods.html">Foods</a></li>
+          <li><a href="dietplan.html">Diet Plans</a></li>
+          <li><a href="mealbuilder.html">Meal Builder</a></li>
+          <li><a href="#footer">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div class="col-md-4 mb-4">
+        <h5 class="footer-heading">Contact</h5>
+        <p><i class="fas fa-phone-alt me-2"></i> +91 90196 00953</p>
+        <p><i class="fas fa-envelope me-2"></i> adityauprabhu@gmail.com</p>
+        <p><i class="fas fa-map-marker-alt me-2"></i> Udupi, India</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+
+<script>
+    const toggleSymbol = document.getElementById('toggleSymbol');
+toggleSymbol.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    toggleSymbol.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+});
+// Complete Meals Array
+const meals = [
+    { name: "Green Salad", category: "veg", calories: 120, protein: 5, carbs: 15, fat: 4 },
+    { name: "Fruit Bowl", category: "veg", calories: 180, protein: 3, carbs: 35, fat: 2 },
+    { name: "Quinoa Salad", category: "veg", calories: 200, protein: 7, carbs: 35, fat: 5 },
+    { name: "Steamed Broccoli", category: "veg", calories: 55, protein: 4, carbs: 11, fat: 0 },
+    { name: "Veggie Skewers", category: "veg", calories: 150, protein: 4, carbs: 12, fat: 7 },
+    { name: "Lentil Soup", category: "veg", calories: 210, protein: 14, carbs: 30, fat: 5 },
+    { name: "Veg Stir Fry", category: "veg", calories: 180, protein: 6, carbs: 25, fat: 7 },
+    { name: "Vegetable Curry", category: "veg", calories: 300, protein: 9, carbs: 40, fat: 12 },
+    { name: "Hummus Plate", category: "veg", calories: 250, protein: 8, carbs: 20, fat: 15 },
+    { name: "Spinach Wrap", category: "veg", calories: 320, protein: 12, carbs: 35, fat: 10 },
+    { name: "Grilled Paneer", category: "veg", calories: 220, protein: 15, carbs: 10, fat: 12 },
+    { name: "Stuffed Peppers", category: "veg", calories: 250, protein: 10, carbs: 30, fat: 8 },
+    
+    { name: "Grilled Chicken Breast", category: "nonveg", calories: 150, protein: 30, carbs: 0, fat: 3 },
+    { name: "Grilled Salmon", category: "nonveg", calories: 250, protein: 22, carbs: 0, fat: 15 },
+    { name: "Boiled Eggs", category: "nonveg", calories: 140, protein: 12, carbs: 1, fat: 9 },
+    { name: "Shrimp Stir Fry", category: "nonveg", calories: 200, protein: 20, carbs: 8, fat: 9 },
+    { name: "Turkey Slices", category: "nonveg", calories: 100, protein: 20, carbs: 0, fat: 2 },
+    { name: "Grilled Steak", category: "nonveg", calories: 400, protein: 35, carbs: 0, fat: 25 },
+    { name: "Chicken Curry", category: "nonveg", calories: 350, protein: 28, carbs: 10, fat: 18 },
+    { name: "Fish Tacos", category: "nonveg", calories: 300, protein: 20, carbs: 25, fat: 12 },
+    { name: "Prawn Curry", category: "nonveg", calories: 220, protein: 18, carbs: 6, fat: 11 },
+    { name: "Omelette", category: "nonveg", calories: 250, protein: 20, carbs: 2, fat: 18 },
+    { name: "Grilled Fish Fillet", category: "nonveg", calories: 230, protein: 26, carbs: 2, fat: 12 },
+    { name: "Egg White Omelette", category: "nonveg", calories: 120, protein: 15, carbs: 2, fat: 4 },
+    
+    { name: "Mixed Protein Bowl", category: "mixed", calories: 450, protein: 30, carbs: 35, fat: 18 },
+    { name: "Chicken & Veggie Wrap", category: "mixed", calories: 320, protein: 25, carbs: 30, fat: 12 },
+    { name: "Egg & Veggie Bowl", category: "mixed", calories: 350, protein: 22, carbs: 28, fat: 15 },
+    { name: "Seafood Salad", category: "mixed", calories: 370, protein: 28, carbs: 18, fat: 14 },
+    { name: "Burrito Bowl", category: "mixed", calories: 500, protein: 30, carbs: 50, fat: 18 },
+    { name: "Chicken & Rice", category: "mixed", calories: 420, protein: 35, carbs: 35, fat: 15 },
+    { name: "Shrimp Noodles", category: "mixed", calories: 480, protein: 25, carbs: 55, fat: 18 },
+    { name: "Egg Fried Rice", category: "mixed", calories: 410, protein: 18, carbs: 45, fat: 16 },
+    { name: "Mixed Protein Pasta", category: "mixed", calories: 550, protein: 28, carbs: 60, fat: 20 },
+    { name: "Steak Salad", category: "mixed", calories: 460, protein: 35, carbs: 20, fat: 22 },
+    { name: "Protein Wrap", category: "mixed", calories: 400, protein: 28, carbs: 30, fat: 15 },
+    { name: "Power Bowl", category: "mixed", calories: 480, protein: 32, carbs: 40, fat: 18 },
+    
+    { name: "Protein Shake", category: "drinks", calories: 200, protein: 25, carbs: 10, fat: 5 },
+    { name: "Energy Drink", category: "drinks", calories: 90, protein: 0, carbs: 22, fat: 0 },
+    { name: "Fruit Juice", category: "drinks", calories: 150, protein: 1, carbs: 35, fat: 0 },
+    { name: "Fruit Smoothie", category: "drinks", calories: 220, protein: 8, carbs: 30, fat: 5 },
+    { name: "Iced Tea (Sugar-free)", category: "drinks", calories: 20, protein: 0, carbs: 5, fat: 0 },
+    { name: "Black Coffee", category: "drinks", calories: 5, protein: 0, carbs: 1, fat: 0 },
+    { name: "Chocolate Milkshake", category: "drinks", calories: 350, protein: 12, carbs: 40, fat: 15 },
+    { name: "Coconut Water", category: "drinks", calories: 60, protein: 1, carbs: 15, fat: 0 },
+    { name: "Pre-Workout Drink", category: "drinks", calories: 80, protein: 0, carbs: 18, fat: 0 },
+    { name: "Green Juice", category: "drinks", calories: 130, protein: 3, carbs: 28, fat: 2 },
+    { name: "Protein Coffee", category: "drinks", calories: 140, protein: 15, carbs: 5, fat: 4 },
+    { name: "Electrolyte Drink", category: "drinks", calories: 60, protein: 0, carbs: 15, fat: 0 }
+];
+
+let totalCalories = 0, totalProtein = 0, totalCarbs = 0, totalFat = 0;
+
+function showMeals(category) {
+    const container = document.getElementById('meal-container');
+    container.innerHTML = '';
+    meals.filter(meal => meal.category === category).forEach(meal => {
+        const card = document.createElement('div');
+        card.className = 'col-md-3 mb-4 animate__animated animate__fadeInUp';
+        card.innerHTML = `
+            <div class="card meal-card p-3" onclick="addItem('${meal.name}', ${meal.calories}, ${meal.protein}, ${meal.carbs}, ${meal.fat})">
+                <h5>${meal.name}</h5>
+                <p>Calories: ${meal.calories} | Protein: ${meal.protein}g | Carbs: ${meal.carbs}g | Fat: ${meal.fat}g</p>
+            </div>
+        `;
+        container.appendChild(card);
+    });
+}
+
+function addItem(name, calories, protein, carbs, fat) {
+  const tbody = document.querySelector('#meal-table tbody');
+  const row = document.createElement('tr');
+
+  row.innerHTML = `
+    <td>${name}</td>
+    <td>${calories}</td>
+    <td>${protein}g</td>
+    <td>${carbs}g</td>
+    <td>${fat}g</td>
+    <td><button class="delete-btn" onclick="removeRow(this, '${name}', ${calories}, ${protein}, ${carbs}, ${fat})">Remove</button></td>
+  `;
+  tbody.appendChild(row);
+
+  totalCalories += calories;
+  totalProtein += protein;
+  totalCarbs += carbs;
+  totalFat += fat;
+
+  updateTotals();
+  showToast(`✅ "${name}" added to your meal plan!`);
+}
+
+
+function removeRow(button, name, calories, protein, carbs, fat) {
+  button.closest('tr').remove();
+  totalCalories -= calories;
+  totalProtein -= protein;
+  totalCarbs -= carbs;
+  totalFat -= fat;
+  updateTotals();
+  showToast(`❌ "${name}" removed from your meal plan.`, '#dc3545');
+}
+
+function updateTotals() {
+  document.getElementById('totalCalories').textContent = totalCalories;
+  document.getElementById('totalProtein').textContent = totalProtein + 'g';
+  document.getElementById('totalCarbs').textContent = totalCarbs + 'g';
+  document.getElementById('totalFat').textContent = totalFat + 'g';
+}
+
+function generatePlan() {
+  const tbody = document.querySelector('#meal-table tbody');
+  const rows = tbody.querySelectorAll('tr');
+  
+  if (rows.length === 0) {
+    alert("Please add some meals first!");
+    return;
+  }
+
+  let content = `
+    <table class="table table-bordered text-center animate__animated animate__fadeIn">
+      <thead class="table-success">
+        <tr>
+          <th>Meal</th>
+          <th>Calories</th>
+          <th>Protein</th>
+          <th>Carbs</th>
+          <th>Fat</th>
+        </tr>
+      </thead>
+      <tbody>
+  `;
+
+  rows.forEach(row => {
+    const cells = row.querySelectorAll('td');
+    content += `
+      <tr>
+        <td>${cells[0].innerText}</td>
+        <td>${cells[1].innerText}</td>
+        <td>${cells[2].innerText}</td>
+        <td>${cells[3].innerText}</td>
+        <td>${cells[4].innerText}</td>
+      </tr>`;
+  });
+
+  content += `
+    <tr class="table-warning fw-bold">
+      <td>Total</td>
+      <td>${document.getElementById('totalCalories').innerText}</td>
+      <td>${document.getElementById('totalProtein').innerText}</td>
+      <td>${document.getElementById('totalCarbs').innerText}</td>
+      <td>${document.getElementById('totalFat').innerText}</td>
+    </tr>
+  </tbody></table>
+  
+  <!-- Motivational Message -->
+  <div class="text-center mt-4 animate__animated animate__heartBeat animate__delay-1s">
+    <h4 class="text-success fw-bold">💪 Happy Gym Fueling! Stay Fit & Strong! 🥗🔥</h4>
+    <p class="text-muted">Your custom GymFuel meal plan is all set. Eat Clean, Train Mean! 💚</p>
+  </div>
+  `;
+
+  document.getElementById('generatedPlan').innerHTML = content;
+
+  const planModal = new bootstrap.Modal(document.getElementById('planModal'));
+  planModal.show();
+  // Clear table and totals after generating
+document.querySelector('#meal-table tbody').innerHTML = '';
+totalCalories = 0;
+totalProtein = 0;
+totalCarbs = 0;
+totalFat = 0;
+updateTotals();
+
+}
+
+function generateAIPlan() {
+   const goal = document.getElementById('goalSelect').value;
+  const count = document.getElementById('mealCount').value;
+
+  // ✅ Show alert if goal or food count not selected
+  if (!goal || !count || goal === "Select Your Gym Goal" || count === "Select No. of Food Items") {
+    alert("⚠️ Please select both a gym goal and number of food items to generate your AI meal plan.");
+    return;
+  }
+
+  const mealCount = parseInt(count);
+  const allMeals = [...meals];
+
+  const shuffled = allMeals.sort(() => 0.5 - Math.random());
+  const selected = shuffled.slice(0, mealCount);
+  // Nutrition totals
+  let totalCaloriesAI = 0, totalProteinAI = 0, totalCarbsAI = 0, totalFatAI = 0;
+
+  let content = `
+    <div class="text-center text-success mb-3 animate__animated animate__zoomIn animate__faster fs-5">
+      🏋️‍♀️ Here's your <strong>${mealCount}-item AI Meal Plan</strong> for <strong>${goal.toUpperCase()}</strong> 💥<br>
+      <span class="text-secondary">Balanced. Smart. Delicious.</span>
+    </div>
+    <table class="table table-bordered text-center">
+      <thead class="table-success">
+        <tr>
+          <th>Meal</th>
+          <th>Calories</th>
+          <th>Protein</th>
+          <th>Carbs</th>
+          <th>Fat</th>
+        </tr>
+      </thead>
+      <tbody>
+  `;
+
+  selected.forEach(meal => {
+    content += `
+      <tr>
+        <td>${meal.name}</td>
+        <td>${meal.calories}</td>
+        <td>${meal.protein}g</td>
+        <td>${meal.carbs}g</td>
+        <td>${meal.fat}g</td>
+      </tr>`;
+    totalCaloriesAI += meal.calories;
+    totalProteinAI += meal.protein;
+    totalCarbsAI += meal.carbs;
+    totalFatAI += meal.fat;
+  });
+
+  content += `
+    <tr class="table-warning fw-bold">
+      <td>Total</td>
+      <td>${totalCaloriesAI}</td>
+      <td>${totalProteinAI}g</td>
+      <td>${totalCarbsAI}g</td>
+      <td>${totalFatAI}g</td>
+    </tr>
+    </tbody>
+    </table>`;
+
+  // Show result in modal
+  document.getElementById('generatedPlan').innerHTML = content;
+  const planModal = new bootstrap.Modal(document.getElementById('planModal'));
+  planModal.show();
+
+  // Reset regular table
+  document.querySelector('#meal-table tbody').innerHTML = '';
+  totalCalories = 0;
+  totalProtein = 0;
+  totalCarbs = 0;
+  totalFat = 0;
+  updateTotals();
+}
+
+function showToast(message, color = '#28a745') {
+  const toast = document.getElementById('toast');
+  toast.textContent = message;
+  toast.style.backgroundColor = color;
+  toast.classList.add('show');
+
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 2500);
+}
+
+
+</script>
+
+
+
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

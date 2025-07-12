@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>GymFuel Food Catalog</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Bebas+Neue&family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.5s, color 0.5s;
+        }
+       .card-img-top {
+    height: 250px;
+    object-fit: fill;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+/* Section Headings */
+h2.text-center {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 2.8rem;
+    letter-spacing: 1px;
+    color: #4CAF50;
+    text-transform: uppercase;
+    position: relative;
+    display: block;
+    text-align: center;
+    margin-bottom: 2.5rem;
+}
+
+h2.text-center::after {
+    content: '';
+    display: block;
+    margin: 10px auto 0;
+    width: 100px;
+    height: 4px;
+    background-color: #7ED957;
+    border-radius: 2px;
+}
+
+/* Food Card Titles */
+.card-title {
+    color: #0a0a0a; /* Dark black */
+    font-weight: 700;
+    font-size: 1.2rem;
+}
+
+.navbar {
+    background-color: white !important;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar .nav-link, .navbar-brand span {
+    color: black !important;
+    transition: color 0.3s;
+}
+
+.navbar-brand span {
+    font-size: 1.8rem;
+    font-family: 'Impact', 'Arial Black', sans-serif;
+}
+
+.dark-mode .navbar {
+    background-color: #020202 !important;
+}
+
+.dark-mode .navbar .nav-link,
+.dark-mode .navbar-brand span {
+    color: white !important;
+}
+
+#toggleSymbol {
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
+.share-icon {
+    font-size: 1.3rem;
+    cursor: pointer;
+    color: #28a745;
+}
+.share-icon:hover {
+    color: #1e7e34;
+}
+.card {
+    background-color: #fff6ed !important;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.view-btn {
+    background-color: #7ED957;  /* Green */
+    color: rgb(11, 10, 10);
+    border: none;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.view-btn:hover {
+    background-color:#fccc2c;  /* Darker Green on hover */
+    transform: scale(1.05);
+     color: rgb(4, 4, 4);
+}
+
+.gym-footer {
+    background-color: #ffffff;
+    color: #000000;
+    font-family: 'Poppins', sans-serif;
+    position: relative;
+    overflow: hidden;
+}
+.footer-brand {
+    color: #000 !important;
+    transition: color 0.3s ease;
+}
+
+.dark-mode .footer-brand {
+    color: #fff !important;
+}
+
+
+.footer-wave {
+    background: linear-gradient(135deg, #7ED957 0%, #4CAF50 100%);
+    height: 100px;
+    border-bottom-left-radius: 50% 20%;
+    border-bottom-right-radius: 50% 20%;
+}
+
+.footer-brand {
+    color: #000 !important;
+    transition: color 0.3s ease;
+}
+
+.footer-heading {
+    color: #7ED957;
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.footer-text {
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-links li {
+    margin-bottom: 0.6rem;
+}
+
+.footer-links a {
+    color: #0e0d0d;
+    text-decoration: none;
+    transition: color 0.3s, transform 0.3s;
+}
+
+.footer-links a:hover {
+    color: #7ED957;
+    transform: translateX(5px);
+}
+
+.social-icons a {
+    display: inline-block;
+    background: #7ED957;
+    color: #1d1f23;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    border-radius: 50%;
+    margin-right: 10px;
+    transition: transform 0.3s, background-color 0.3s;
+    font-size: 18px;
+}
+
+.social-icons a:hover {
+    transform: scale(1.15);
+    background: #4CAF50;
+    color: #fff;
+}
+
+.dark-mode footer,
+.dark-mode .gym-footer {
+    color: white !important;
+    background-color: #121212;
+}
+
+.dark-mode .footer-brand {
+    color: #fff !important;
+}
+
+.dark-mode .footer-links a {
+    color: #cccccc;
+}
+
+.dark-mode .footer-links a:hover {
+    color: #7ED957;
+}
+
+.dark-mode .footer-text,
+.dark-mode .footer-heading {
+    color: #e0e0e0 !important;
+}
+    </style>
+</head>
+<body>
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="index.html">
+      <img src="images/logo2.jpg" alt="GymFuel Logo" width="40" height="40" class="me-2 rounded-circle border">
+      <span>GymFuel</span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="index.html">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="foods.html">Foods</a></li>
+        <li class="nav-item"><a class="nav-link" href="dietplan.html">Diet Plans</a></li>
+        <li class="nav-item"><a class="nav-link" href="mealbuilder.html">Meal Builder</a></li>
+        <li class="nav-item"><a class="nav-link" href="#footer">Contact</a></li>
+      </ul>
+      <span id="toggleSymbol" class="ms-3" title="Toggle Night/Day Mode">🌙</span>
+    </div>
+  </div>
+</nav>
+
+
+
+
+<div class="container my-5">
+    <h2 class="text-center mb-4" id="veg">Veg Items</h2>
+    <div class="row" id="vegItems"></div>
+</div>
+
+<div class="container my-5">
+    <h2 class="text-center mb-4" id="nonveg">Non-Veg Items</h2>
+    <div class="row" id="nonVegItems"></div>
+</div>
+
+<div class="container my-5">
+    <h2 class="text-center mb-4" id="mixed">Mixed Items</h2>
+    <div class="row" id="mixedItems"></div>
+</div>
+
+<div class="container my-5">
+    <h2 class="text-center mb-4" id="drinks">Drinks</h2>
+    <div class="row" id="drinkItems"></div>
+</div>
+
+<!-- Footer -->
+<footer class="gym-footer" id="footer">
+  <div class="footer-wave"></div>
+  <div class="container py-5">
+    <div class="row text-center text-md-start">
+      <!-- About -->
+      <div class="col-md-4 mb-4">
+        <div class="d-flex align-items-center mb-3">
+          <img src="images/logo2.jpg" alt="GymFuel Logo" class="rounded-circle me-2" width="50" height="50">
+          <h4 class="footer-brand mb-0">GymFuel</h4>
+        </div>
+        <p class="footer-text">
+          The GymFuel team is passionate about delivering expert diet plans, nutritious meals, and fitness guidance.
+        </p>
+        <div class="social-icons">
+          <a href="#"><i class="fab fa-twitter"></i></a>
+          <a href="#"><i class="fab fa-facebook-f"></i></a>
+          <a href="#"><i class="fab fa-instagram"></i></a>
+          <a href="#"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+
+      <!-- Links -->
+      <div class="col-md-4 mb-4">
+        <h5 class="footer-heading">Explore</h5>
+        <ul class="footer-links">
+          <li><a href="index.html">Home</a></li>
+          <li><a href="foods.html">Foods</a></li>
+          <li><a href="dietplan.html">Diet Plans</a></li>
+          <li><a href="mealbuilder.html">Meal Builder</a></li>
+          <li><a href="#footer">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div class="col-md-4 mb-4">
+        <h5 class="footer-heading">Contact</h5>
+        <p><i class="fas fa-phone-alt me-2"></i> +91 90196 00953</p>
+        <p><i class="fas fa-envelope me-2"></i> adityauprabhu@gmail.com</p>
+        <p><i class="fas fa-map-marker-alt me-2"></i> Udupi, India</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+AOS.init();
+const toggleSymbol = document.getElementById('toggleSymbol');
+toggleSymbol.addEventListener('click', () => {
+    document.body.classList.toggle('dark-mode');
+    toggleSymbol.textContent = document.body.classList.contains('dark-mode') ? '☀️' : '🌙';
+});
+
+function createCard(image, title, details) {
+    let recipeLink = '';
+
+    // Link Green Salad to recipe.html
+    if (title === 'Green Salad') {
+        recipeLink = 'recipe.html';
+    }
+
+    return `<div class="col-md-4 mb-4" data-aos="fade-up">
+        <div class="card h-100">
+            <img src="${image}" class="card-img-top" alt="${title}">
+            <div class="card-body">
+                <h5 class="card-title">${title}</h5>
+                <p class="card-text">${details}</p>
+                ${
+                    recipeLink 
+                    ? `<a href="${recipeLink}" class="btn view-btn w-100">View Recipe</a>` 
+                    : `<button class="btn view-btn w-100" onclick="alert('View Recipe for ${title}')">View Recipe</button>`
+                }
+            </div>
+        </div>
+    </div>`;
+}
+
+
+
+const vegData = [
+    {img:'images/foods/green_salad.jpg', title:'Green Salad', details:'Calories: 120 | Protein: 5g | Carbs: 15g | Fat: 4g'},
+    {img:'images/foods/fruit_bowl.jpg', title:'Fruit Bowl', details:'Calories: 180 | Protein: 3g | Carbs: 35g | Fat: 2g'},
+    {img:'images/foods/tabbouleh-salad.jpg', title:'Quinoa Salad', details:'Calories: 200 | Protein: 7g | Carbs: 35g | Fat: 5g'},
+    {img:'images/foods/broclli.jpg', title:'Steamed Broccoli', details:'Calories: 55 | Protein: 4g | Carbs: 11g | Fat: 0g'},
+    {img:'images/foods/veggie_skewers.jpg', title:'Veggie Skewers', details:'Calories: 150 | Protein: 4g | Carbs: 12g | Fat: 7g'},
+    {img:'images/foods/lentil-soup.jpg', title:'Lentil Soup', details:'Calories: 210 | Protein: 14g | Carbs: 30g | Fat: 5g'},
+    {img:'images/foods/stir_fry.jpg', title:'Veg Stir Fry', details:'Calories: 180 | Protein: 6g | Carbs: 25g | Fat: 7g'},
+    {img:'images/foods/veg_curry.jpg', title:'Vegetable Curry', details:'Calories: 300 | Protein: 9g | Carbs: 40g | Fat: 12g'},
+    {img:'images/foods/hummus_plate.jpg', title:'Hummus Plate', details:'Calories: 250 | Protein: 8g | Carbs: 20g | Fat: 15g'},
+    {img:'images/foods/spinach_wrap.jpg', title:'Spinach Wrap', details:'Calories: 320 | Protein: 12g | Carbs: 35g | Fat: 10g'},
+    {img:'images/foods/grill_paneer.jpg', title:'Grilled Paneer', details:'Calories: 220 | Protein: 15g | Carbs: 10g | Fat: 12g'},
+    {img:'images/foods/stuff_peppers.jpg', title:'Stuffed Peppers', details:'Calories: 250 | Protein: 10g | Carbs: 30g | Fat: 8g'}
+];
+
+const nonVegData = [
+    {img:'images/foods/chick_breast.jpg', title:'Grilled Chicken Breast', details:'Calories: 150 | Protein: 30g | Carbs: 0g | Fat: 3g'},
+    {img:'images/', title:'Grilled Salmon', details:'Calories: 250 | Protein: 22g | Carbs: 0g | Fat: 15g'},
+    {img:'images/foods/boiled_eggs.jpg', title:'Boiled Eggs', details:'Calories: 140 | Protein: 12g | Carbs: 1g | Fat: 9g'},
+    {img:'images/foods/shrimp.jpg', title:'Shrimp Stir Fry', details:'Calories: 200 | Protein: 20g | Carbs: 8g | Fat: 9g'},
+    {img:'images/foods/turkey.jpg', title:'Turkey Slices', details:'Calories: 100 | Protein: 20g | Carbs: 0g | Fat: 2g'},
+    {img:'images/foods/steak.jpg', title:'Grilled Steak', details:'Calories: 400 | Protein: 35g | Carbs: 0g | Fat: 25g'},
+    {img:'images/chicken_curry.jpg', title:'Chicken Curry', details:'Calories: 350 | Protein: 28g | Carbs: 10g | Fat: 18g'},
+    {img:'images/fish_tacos.jpg', title:'Fish Tacos', details:'Calories: 300 | Protein: 20g | Carbs: 25g | Fat: 12g'},
+    {img:'images/prawn_curry.jpg', title:'Prawn Curry', details:'Calories: 220 | Protein: 18g | Carbs: 6g | Fat: 11g'},
+    {img:'images/omelette.jpg', title:'Omelette', details:'Calories: 250 | Protein: 20g | Carbs: 2g | Fat: 18g'},
+    {img:'images/fish_fillet.jpg', title:'Grilled Fish Fillet', details:'Calories: 230 | Protein: 26g | Carbs: 2g | Fat: 12g'},
+    {img:'images/egg_white_omelette.jpg', title:'Egg White Omelette', details:'Calories: 120 | Protein: 15g | Carbs: 2g | Fat: 4g'}
+];
+
+const mixedData = [
+    {img:'images/foods/mixed_bowl.jpg', title:'Mixed Protein Bowl', details:'Calories: 450 | Protein: 30g | Carbs: 35g | Fat: 18g'},
+    {img:'images/foods/Chicken_Veggie_Wrap.jpg', title:'Chicken & Veggie Wrap', details:'Calories: 320 | Protein: 25g | Carbs: 30g | Fat: 12g'},
+    {img:'images/foods/egg_veggie_bowl.jpg', title:'Egg & Veggie Bowl', details:'Calories: 350 | Protein: 22g | Carbs: 28g | Fat: 15g'},
+    {img:'images/foods/seafood_salad.jpg', title:'Seafood Salad', details:'Calories: 370 | Protein: 28g | Carbs: 18g | Fat: 14g'},
+    {img:'images/burrito_bowl.jpg', title:'Burrito Bowl', details:'Calories: 500 | Protein: 30g | Carbs: 50g | Fat: 18g'},
+    {img:'images/chicken_rice.jpg', title:'Chicken & Rice', details:'Calories: 420 | Protein: 35g | Carbs: 35g | Fat: 15g'},
+    {img:'images/shrimp_noodles.jpg', title:'Shrimp Noodles', details:'Calories: 480 | Protein: 25g | Carbs: 55g | Fat: 18g'},
+    {img:'images/egg_rice.jpg', title:'Egg Fried Rice', details:'Calories: 410 | Protein: 18g | Carbs: 45g | Fat: 16g'},
+    {img:'images/mixed_pasta.jpg', title:'Mixed Protein Pasta', details:'Calories: 550 | Protein: 28g | Carbs: 60g | Fat: 20g'},
+    {img:'images/steak_salad.jpg', title:'Steak Salad', details:'Calories: 460 | Protein: 35g | Carbs: 20g | Fat: 22g'},
+    {img:'images/protein_wrap.jpg', title:'Protein Wrap', details:'Calories: 400 | Protein: 28g | Carbs: 30g | Fat: 15g'},
+    {img:'images/power_bowl.jpg', title:'Power Bowl', details:'Calories: 480 | Protein: 32g | Carbs: 40g | Fat: 18g'}
+];
+
+const drinkData = [
+    {img:'images/foods/protein_shake.jpg', title:'Protein Shake', details:'Calories: 200 | Protein: 25g | Carbs: 10g | Fat: 5g'},
+    {img:'images/foods/energy_drink.jpg', title:'Energy Drink', details:'Calories: 90 | Protein: 0g | Carbs: 22g | Fat: 0g'},
+    {img:'images/foods/fruit_juice.jpg', title:'Fruit Juice', details:'Calories: 150 | Protein: 1g | Carbs: 35g | Fat: 0g'},
+    {img:'images/smoothie.jpg', title:'Fruit Smoothie', details:'Calories: 220 | Protein: 8g | Carbs: 30g | Fat: 5g'},
+    {img:'images/iced_tea.jpg', title:'Iced Tea (Sugar-free)', details:'Calories: 20 | Protein: 0g | Carbs: 5g | Fat: 0g'},
+    {img:'images/black_coffee.jpg', title:'Black Coffee', details:'Calories: 5 | Protein: 0g | Carbs: 1g | Fat: 0g'},
+    {img:'images/milkshake.jpg', title:'Chocolate Milkshake', details:'Calories: 350 | Protein: 12g | Carbs: 40g | Fat: 15g'},
+    {img:'images/coconut_water.jpg', title:'Coconut Water', details:'Calories: 60 | Protein: 1g | Carbs: 15g | Fat: 0g'},
+    {img:'images/preworkout.jpg', title:'Pre-Workout Drink', details:'Calories: 80 | Protein: 0g | Carbs: 18g | Fat: 0g'},
+    {img:'images/green_juice.jpg', title:'Green Juice', details:'Calories: 130 | Protein: 3g | Carbs: 28g | Fat: 2g'},
+    {img:'images/protein_coffee.jpg', title:'Protein Coffee', details:'Calories: 140 | Protein: 15g | Carbs: 5g | Fat: 4g'},
+    {img:'images/electrolyte_drink.jpg', title:'Electrolyte Drink', details:'Calories: 60 | Protein: 0g | Carbs: 15g | Fat: 0g'}
+];
+
+document.getElementById('vegItems').innerHTML = vegData.map(item => createCard(item.img, item.title, item.details)).join('');
+document.getElementById('nonVegItems').innerHTML = nonVegData.map(item => createCard(item.img, item.title, item.details)).join('');
+document.getElementById('mixedItems').innerHTML = mixedData.map(item => createCard(item.img, item.title, item.details)).join('');
+document.getElementById('drinkItems').innerHTML = drinkData.map(item => createCard(item.img, item.title, item.details)).join('');
+</script>
+</body>
+</html>
